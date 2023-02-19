@@ -26,6 +26,9 @@ info_menu = ReplyKeyboardMarkup(
             KeyboardButton(text='Льготы и зарплата'),
             KeyboardButton(text='Наши контакты'),
         ],
+        [
+            KeyboardButton(text='Вернуться в главное меню.'),
+        ],
     ],
     resize_keyboard=True
 )

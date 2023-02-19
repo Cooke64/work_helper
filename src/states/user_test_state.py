@@ -4,6 +4,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
 class UserTestState(StatesGroup):
+    ready_to_start = State()
     age = State()
     nationality = State()
     has_crime = State()
@@ -13,6 +14,7 @@ class UserTestState(StatesGroup):
 
 
 class UserData(typing.NamedTuple):
+    ready_to_start: str
     age: int
     nationality: str
     has_crime: str | bool

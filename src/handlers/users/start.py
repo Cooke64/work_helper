@@ -25,3 +25,10 @@ async def cmd_cancel(message: Message, state: FSMContext):
                          reply_markup=ReplyKeyboardRemove())
     await message.answer('Если что-то непонятно, используй /help',
                          reply_markup=main_menu_buttons)
+
+
+@dp.message_handler(Text(equals='Вернуться в главное меню.'))
+async def back_to_main_menu(message: Message):
+    await message.answer(
+        "Начнем с начала.", reply_markup=main_menu_buttons
+    )

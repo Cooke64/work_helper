@@ -22,10 +22,29 @@ from src.states.user_test_state import UserTestState
 
 
 @dp.message_handler(Text(equals='❕ Пройду ли я к вам?'))
-async def test_user_capacity(message: Message):
+async def start_user_test(message: Message):
     await message.answer(TEST_DESCRIPTION)
-    await message.answer('Сколько вам полных лет?',
-                         reply_markup=ReplyKeyboardRemove())
+    await message.answer(
+        'Вы готовы начать тестирование?',
+        reply_markup=TEST_USER_CHOICES
+    )
+    await UserTestState.ready_to_start.set()
+
+
+@dp.callback_query_handler(text=['1', '0'], state=UserTestState.ready_to_start)
+async def test_user_capacity(call: CallbackQuery, state: FSMContext):
+    await state.update_data(ready_to_start=call.data)
+    data = await state.get_data()
+    if not data.get('ready_to_start'):
+        await call.message.answer(
+            'Вы можете пройти тест в любое для вас время.',
+            reply_markup=main_menu_buttons
+        )
+        await state.finish()
+        return
+    await call.message.answer(
+        'Напишите, сколько вам полных лет?', reply_markup=ReplyKeyboardRemove()
+    )
     await UserTestState.age.set()
 
 

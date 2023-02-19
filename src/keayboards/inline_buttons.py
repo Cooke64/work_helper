@@ -4,10 +4,10 @@ about_us_inline = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Служба', callback_data='Сообщение'
+                text='Про город.', callback_data='химки'
             ),
             InlineKeyboardButton(
-                text='Видео', callback_data='Трудоустройство'
+                text='Презентация аэропорта', callback_data='презентация'
             ),
         ],
     ],
@@ -32,18 +32,18 @@ benefits = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Зарплата', callback_data='Зарплата'
+                text='Зарплата', callback_data='benefits_зарплата'
             ),
             InlineKeyboardButton(
-                text='Жилищное обеспечение', callback_data='Обязанности'
+                text='Жилищное обеспечение', callback_data='benefits_жилье'
             ),
         ],
         [
             InlineKeyboardButton(
-                text='Порядок начисления пенсии', callback_data='пенсия'
+                text='Порядок начисления пенсии', callback_data='benefits_пенсия'
             ),
             InlineKeyboardButton(
-                text='Отпуск', callback_data='отпуск'
+                text='Отпуск', callback_data='benefits_отпуск'
             ),
         ],
     ],

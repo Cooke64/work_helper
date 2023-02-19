@@ -6,3 +6,7 @@ class IsPrivate(BoundFilter):
     async def check(self, message: types.Message):
         return message.chat.type == types.ChatType.PRIVATE
 
+
+class IsBenefits(BoundFilter):
+    async def check(self, call: types.CallbackQuery):
+        return call.message
