@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters import Text
 
 from src.keayboards.inline_buttons import about_us_inline, duty, benefits
 from src.loader import dp
+from src.messages.message_text import TEST_SUCCESS_NOT_CALL
 
 
 @dp.message_handler(Text(equals='Про Шереметьево'))
@@ -24,4 +25,4 @@ async def get_benefits(message: types.Message):
 
 @dp.message_handler(Text(equals='Наши контакты'))
 async def contact_us(message: types.Message):
-    await message.answer("Как с нами связаться?", reply_markup=about_us_inline)
+    await message.answer(TEST_SUCCESS_NOT_CALL)

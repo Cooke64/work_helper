@@ -8,6 +8,7 @@ main_menu_buttons = ReplyKeyboardMarkup(
         ],
         [
             KeyboardButton(text='📞 Связаться с нами'),
+            KeyboardButton(text='✉ Оставить сообщение'),
         ],
         [
             KeyboardButton(text='❓Узнать статус трудоустройства'),
@@ -32,3 +33,10 @@ info_menu = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+
+async def contact_keyboard():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    first_button = KeyboardButton(text="📱 Отправить", request_contact=True)
+    markup.add(first_button)
+    return markup

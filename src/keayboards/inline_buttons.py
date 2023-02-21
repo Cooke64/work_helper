@@ -18,10 +18,10 @@ duty = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Обязанности', callback_data='Обязанности'
+                text='Обязанности', callback_data='duty_обязанности'
             ),
             InlineKeyboardButton(
-                text='Ограничения', callback_data='Ограничения'
+                text='Запреты и ограничения', callback_data='duty_запреты'
             ),
         ],
     ],

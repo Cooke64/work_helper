@@ -4,6 +4,10 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
 from src.config import ADMINS_ID
+from src.database.service import (
+    update_user_test,
+    get_data_about_test
+)
 from src.keayboards.inline_buttons import TEST_USER_CHOICES
 from src.keayboards.main_menu import main_menu_buttons
 from src.loader import dp
@@ -24,6 +28,13 @@ from src.states.user_test_state import UserTestState
 @dp.message_handler(Text(equals='❕ Пройду ли я к вам?'))
 async def start_user_test(message: Message):
     await message.answer(TEST_DESCRIPTION)
+    passed, can_serve = get_data_about_test(message.from_user.id)
+    if passed:
+        message_answer = 'Отлично, вы нам подходите' if can_serve else 'К сожалению, вы нам не подходите'
+        await message.answer(
+            message_answer,
+        )
+        return
     await message.answer(
         'Вы готовы начать тестирование?',
         reply_markup=TEST_USER_CHOICES
@@ -34,6 +45,7 @@ async def start_user_test(message: Message):
 @dp.callback_query_handler(text=['1', '0'], state=UserTestState.ready_to_start)
 async def test_user_capacity(call: CallbackQuery, state: FSMContext):
     await state.update_data(ready_to_start=call.data)
+    print(call.from_user)
     data = await state.get_data()
     if not data.get('ready_to_start'):
         await call.message.answer(
@@ -103,6 +115,7 @@ async def try_drugs_and_get_result(call: CallbackQuery, state: FSMContext):
             reply_markup=TEST_USER_CHOICES
         )
         await UserTestState.want_to_contact.set()
+    update_user_test(call.from_user.id, call.from_user.username, can_serve=reply)
 
 
 @dp.callback_query_handler(text=['1', '0'],
@@ -117,7 +130,7 @@ async def is_user_want_to_contact(call: CallbackQuery, state: FSMContext):
         )
         await state.finish()
     else:
-        await call.message.answer('Введите свой номер телефона')
+        await call.message.answer('📱 Введите свой номер телефона')
         await UserTestState.phone_number.set()
 
 
@@ -137,5 +150,5 @@ async def get_phone_number_from_user(message: types.Message,
     for _ in ADMINS_ID:
         # bot.send_message(123, 'sdds')
         log.info(
-            f'Пользователь оставил номер телефона для связи {phone_number}')
+            f'Пользователь оставил номер телефона для связи {phone_number.get("phone_number")}')
     await state.finish()
