@@ -1,18 +1,14 @@
-import glob
-
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
-from src.database.service import leave_message
-from src.keayboards.inline_buttons import about_us_inline
+from src.database.user_crud import leave_message
 from src.keayboards.inline_buttons import benefits, duty
 from src.keayboards.main_menu import main_menu_buttons
 from src.loader import dp
 from src.main import log
 from src.messages import benefits_message
-from src.messages.message_text import ABOUT_CITY, ABOUT_PORT
-from src.states.leave_message_state import LeaveMessage
+from src.states.leave_message_state import LeaveMessageMain
 
 message_data = {
     # льготы
@@ -32,28 +28,17 @@ reply_keyboard = {
 }
 
 
-@dp.callback_query_handler(lambda call: 'химки' in call.data)
-async def get_info_about_service(call: types.CallbackQuery):
-    photo_album = types.MediaGroup()
-    images = glob.glob('media/*.jpg')
-    caption = ABOUT_CITY
-    [photo_album.attach_photo(photo=types.InputFile(img), caption=caption) for
-     img in images]
-    await call.message.answer_media_group(photo_album)
-    await call.message.answer(
-        "Здесь вы можете узнать про Шереметьево, города рядом, природу и тд",
-        reply_markup=about_us_inline)
-
-
-@dp.callback_query_handler(lambda call: 'презентация' in call.data)
-async def get_info_about_service(call: types.CallbackQuery):
-    chat_id = call.message.chat.id
-    video = 'BAACAgIAAxkBAAIE72Pr7up-9GSglTRU3D7xyx7P3NAzAAK_KQACxthhS4CVkRXjzqOSLgQ'
-    caption = ABOUT_PORT
-    await dp.bot.send_video(chat_id, video=video, caption=caption)
-    await call.message.answer(
-        "Здесь вы можете узнать про Шереметьево, города рядом, природу и тд",
-        reply_markup=about_us_inline)
+# @dp.callback_query_handler(lambda call: 'химки' in call.data)
+# async def get_info_about_service(call: types.CallbackQuery):
+#     photo_album = types.MediaGroup()
+#     images = glob.glob('media/*.jpg')
+#     caption = ABOUT_CITY
+#     [photo_album.attach_photo(photo=types.InputFile(img), caption=caption) for
+#      img in images]
+#     await call.message.answer_media_group(photo_album)
+#     await call.message.answer(
+#         "Здесь вы можете узнать про Шереметьево, города рядом, природу и тд",
+#         reply_markup=about_us_inline)
 
 
 @dp.callback_query_handler(lambda call: call.data in message_data)
@@ -64,15 +49,15 @@ async def get_info_about_benefits(call: types.CallbackQuery):
         await call.message.answer(message, reply_markup=reply_data[0])
 
 
-@dp.message_handler(state=LeaveMessage.message_from_user)
+@dp.message_handler(state=LeaveMessageMain.message_from)
 async def save_message_from_user(message: Message, state: FSMContext):
     """
     Обработчик сообщений при запросе на отправку обратной связи.
     """
-    await state.update_data(message_from_user=message.text)
+    await state.update_data(message_from=message.text)
     data = await state.get_data()
     username = message.from_user.username
-    message_from_user = data.get('message_from_user')
+    message_from_user = data.get('message_from')
     log.info(
         f'Отправлено новое обращение от {username}\n {message_from_user}\n')
     await message.answer(

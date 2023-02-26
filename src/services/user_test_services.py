@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 
 from src.services.magic_numbers import Nums
 from src.states.user_test_state import UserData
@@ -26,7 +26,14 @@ async def check_user_test(data: dict[int]) -> bool:
     return False
 
 
-def validate_phone_number(number : str) -> bool:
-    pattern = '^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$'
+def validate_phone_number(number: str) -> bool:
+    pattern = '^((8|\+7)[\- ]?)(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
     r_2 = re.compile(pattern)
     return True if r_2.search(number) else False
+
+
+def get_username_id(instance: CallbackQuery | Message):
+    user_id = instance.from_user.id
+    username = instance.from_user.username
+    first_name = instance.from_user.first_name
+    return username or first_name or user_id, user_id

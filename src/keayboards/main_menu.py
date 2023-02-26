@@ -16,7 +16,18 @@ main_menu_buttons = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
-
+admin_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='🛂 Получить информацию'),
+            KeyboardButton(text='❕ Пройду ли я к вам?'),
+        ],
+        [
+            KeyboardButton(text='Админ панель'),
+        ],
+    ],
+    resize_keyboard=True
+)
 info_menu = ReplyKeyboardMarkup(
     keyboard=[
         [
@@ -25,7 +36,7 @@ info_menu = ReplyKeyboardMarkup(
         ],
         [
             KeyboardButton(text='Льготы и зарплата'),
-            KeyboardButton(text='Наши контакты'),
+            KeyboardButton(text='Видеопрезентация'),
         ],
         [
             KeyboardButton(text='Вернуться в главное меню.'),

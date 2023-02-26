@@ -4,9 +4,6 @@ about_us_inline = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Про город.', callback_data='химки'
-            ),
-            InlineKeyboardButton(
                 text='Презентация аэропорта', callback_data='презентация'
             ),
         ],

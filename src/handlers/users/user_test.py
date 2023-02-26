@@ -4,37 +4,33 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
 from src.config import ADMINS_ID
-from src.database.service import (
+from src.database.user_crud import (
     update_user_test,
     get_data_about_test
 )
 from src.keayboards.inline_buttons import TEST_USER_CHOICES
 from src.keayboards.main_menu import main_menu_buttons
-from src.loader import dp
+from src.loader import dp, bot
 from src.main import log
-from src.messages.message_text import (
-    TEST_SUCCESS_NOT_CALL,
-    TEST_SUCCESS_AND_CALL,
-    TEST_DESCRIPTION
-)
+from src.messages import message_text as ms
 from src.services.user_test_services import (
     check_user_test,
     get_user_passed_test,
-    validate_phone_number
+    validate_phone_number, get_username_id
 )
 from src.states.user_test_state import UserTestState
 
 
 @dp.message_handler(Text(equals='❕ Пройду ли я к вам?'))
 async def start_user_test(message: Message):
-    await message.answer(TEST_DESCRIPTION)
     passed, can_serve = get_data_about_test(message.from_user.id)
     if passed:
-        message_answer = 'Отлично, вы нам подходите' if can_serve else 'К сожалению, вы нам не подходите'
+        message_answer = ms.PASSED_TEST if can_serve else ms.NOt_PASSED_TEXT
         await message.answer(
             message_answer,
         )
         return
+    await message.answer(ms.TEST_DESCRIPTION)
     await message.answer(
         'Вы готовы начать тестирование?',
         reply_markup=TEST_USER_CHOICES
@@ -45,19 +41,20 @@ async def start_user_test(message: Message):
 @dp.callback_query_handler(text=['1', '0'], state=UserTestState.ready_to_start)
 async def test_user_capacity(call: CallbackQuery, state: FSMContext):
     await state.update_data(ready_to_start=call.data)
-    print(call.from_user)
     data = await state.get_data()
-    if not data.get('ready_to_start'):
+    if not int(data.get('ready_to_start')):
         await call.message.answer(
             'Вы можете пройти тест в любое для вас время.',
             reply_markup=main_menu_buttons
         )
         await state.finish()
         return
-    await call.message.answer(
-        'Напишите, сколько вам полных лет?', reply_markup=ReplyKeyboardRemove()
-    )
-    await UserTestState.age.set()
+    else:
+        await call.message.answer(
+            'Напишите, сколько вам полных лет?',
+            reply_markup=ReplyKeyboardRemove()
+        )
+        await UserTestState.age.set()
 
 
 @dp.message_handler(state=UserTestState.age)
@@ -101,21 +98,21 @@ async def try_drugs_and_get_result(call: CallbackQuery, state: FSMContext):
     await state.update_data(try_drugs=int(call.data))
     data = await state.get_data()
     reply = await check_user_test(data)
-    message_reply = 'Хер вам, а не служба ⛔'
     passed_test = get_user_passed_test(call, reply)
+    user_name, user_id = get_username_id(call)
     log.info(f'Пользователь закончил тест. Обратить внимание. {passed_test}')
     if not reply:
         await call.message.answer(
-            message_reply, reply_markup=main_menu_buttons
+            ms.NOt_PASSED_TEXT, reply_markup=main_menu_buttons
         )
         await state.finish()
+        update_user_test(user_id, user_name, reply)
     else:
         await call.message.answer(
-            TEST_SUCCESS_AND_CALL,
+            ms.TEST_SUCCESS_AND_CALL,
             reply_markup=TEST_USER_CHOICES
         )
         await UserTestState.want_to_contact.set()
-    update_user_test(call.from_user.id, call.from_user.username, can_serve=reply)
 
 
 @dp.callback_query_handler(text=['1', '0'],
@@ -123,12 +120,14 @@ async def try_drugs_and_get_result(call: CallbackQuery, state: FSMContext):
 async def is_user_want_to_contact(call: CallbackQuery, state: FSMContext):
     await state.update_data(want_to_contact=int(call.data))
     data = await state.get_data()
+    user_name, user_id = get_username_id(call)
     if not data.get('want_to_contact'):
         await call.message.answer(
-            TEST_SUCCESS_NOT_CALL,
+            ms.TEST_SUCCESS_NOT_CALL,
             reply_markup=main_menu_buttons
         )
         await state.finish()
+        update_user_test(user_id, user_name, can_serve=True)
     else:
         await call.message.answer('📱 Введите свой номер телефона')
         await UserTestState.phone_number.set()
@@ -146,9 +145,12 @@ async def get_phone_number_from_user(message: types.Message,
         "Скоро за вами придут. Готовьтесь к службе!",
         reply_markup=main_menu_buttons
     )
-    phone_number = await state.get_data()
-    for _ in ADMINS_ID:
-        # bot.send_message(123, 'sdds')
-        log.info(
-            f'Пользователь оставил номер телефона для связи {phone_number.get("phone_number")}')
+    phone_data = await state.get_data()
+    phone = phone_data.get("phone_number")
+    for admin_id in ADMINS_ID:
+        mes = f'Пользователь оставил номер телефона для связи {phone}'
+        await bot.send_message(admin_id, mes)
+        log.info(mes)
+    user_name, user_id = get_username_id(message)
+    update_user_test(user_id, user_name, can_serve=True, phone=phone)
     await state.finish()
