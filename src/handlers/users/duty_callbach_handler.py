@@ -5,7 +5,7 @@ from aiogram.types import Message
 from src.database.user_crud import leave_message
 from src.keayboards.inline_buttons import benefits, duty
 from src.keayboards.main_menu import main_menu_buttons
-from src.loader import dp
+from src.loader import dp, bot
 from src.main import log
 from src.messages import benefits_message
 from src.states.leave_message_state import LeaveMessageMain
@@ -46,6 +46,8 @@ async def get_info_about_benefits(call: types.CallbackQuery):
     if call.data in message_data:
         message = message_data[call.data]
         reply_data = reply_keyboard[call.data.split('_')[0]]
+        # удаляет текущее сообщение бота и выводит новый запрос пользователя
+        await bot.delete_message(call.message.chat.id, call.message.message_id)
         await call.message.answer(message, reply_markup=reply_data[0])
 
 

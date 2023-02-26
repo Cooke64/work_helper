@@ -1,4 +1,7 @@
-from aiogram.types import Message, CallbackQuery, InputMedia, InputFile
+import asyncio
+
+from aiogram.types import Message, CallbackQuery, InputMedia, InputFile, \
+    ChatActions
 
 from src.handlers.users.photo_slider_handler.slider_keyboard import (
     items,
@@ -14,6 +17,8 @@ async def get_photo_slider(message: Message):
     await message.answer(
         'Здесь вы можете узнать про Шереметьево, города рядом, природу и тд',
     )
+    # отображает процесс отправки фото.
+    await bot.send_chat_action(message.chat.id, ChatActions.UPLOAD_PHOTO)
     await bot.send_photo(
         chat_id=message.chat.id,
         photo=InputFile(fruit_data.get('image_url')),

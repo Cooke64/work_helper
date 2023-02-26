@@ -3,8 +3,9 @@ from aiogram.dispatcher import FSMContext
 
 from src.config import ADMINS_ID
 from src.database import admin_crud as crud
+from src.handlers.admin.utils import show_all_users
 from src.loader import dp
-from src.services.admins_service import show_all_users
+
 from src.states.leave_message_state import LeaveMessage
 
 admin_commands = {

@@ -1,4 +1,4 @@
-from src.database.tables import UserMessage
+from src.database.user_model import UserMessage
 from src.main import session
 
 

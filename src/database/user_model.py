@@ -1,9 +1,8 @@
 from datetime import datetime
 
 from sqlalchemy import Column as _, Integer, String, DateTime, Boolean
-from sqlalchemy.orm import declarative_base
 
-Base = declarative_base()
+from src.database.image_model import Base
 
 
 class UserMessage(Base):
