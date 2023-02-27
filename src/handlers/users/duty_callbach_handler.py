@@ -28,19 +28,6 @@ reply_keyboard = {
 }
 
 
-# @dp.callback_query_handler(lambda call: 'химки' in call.data)
-# async def get_info_about_service(call: types.CallbackQuery):
-#     photo_album = types.MediaGroup()
-#     images = glob.glob('media/*.jpg')
-#     caption = ABOUT_CITY
-#     [photo_album.attach_photo(photo=types.InputFile(img), caption=caption) for
-#      img in images]
-#     await call.message.answer_media_group(photo_album)
-#     await call.message.answer(
-#         "Здесь вы можете узнать про Шереметьево, города рядом, природу и тд",
-#         reply_markup=about_us_inline)
-
-
 @dp.callback_query_handler(lambda call: call.data in message_data)
 async def get_info_about_benefits(call: types.CallbackQuery):
     if call.data in message_data:

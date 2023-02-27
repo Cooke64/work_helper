@@ -9,7 +9,7 @@ if os.path.exists(dotenv_path):
 
 DATABASE_URI = 'postgresql://postgres:12345678@localhost:5432/telegram'
 
-TOKEN = str(os.getenv('TOKEN'))
+TOKEN = '5643549852:AAF7FnnXnUk7xGQmshGZMbJ4xp89sNZDygY'
 
 ADMINS_ID = [
     514541144,

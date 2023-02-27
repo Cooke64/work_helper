@@ -3,12 +3,17 @@ import glob
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
+from src.database.image_crud import get_all_photos
+from src.database.image_model import PhotosIds
 from src.messages.photo_about_descriptions import desc
 
 items_callback = CallbackData("PhotoItems", "page")
-images = glob.glob('media/*.jpg')
+
+items_from_bd: list[PhotosIds] = get_all_photos()
+# загрузка фоток по id из бд
 items = [
-    {'slug': img, 'image_url': img, 'display_name': descr} for img, descr in zip(images, desc)
+    {'slug': img.file_unique_id, 'image_url': img.photo_id,
+     'display_name': descr} for img, descr in zip(items_from_bd, desc)
 ]
 
 

@@ -4,7 +4,6 @@ from aiogram import executor
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
 import filters
 from src.config import DATABASE_URI
 from src.database.image_model import Base
@@ -16,7 +15,6 @@ log.setLevel(logging.INFO)
 log.addHandler(logging.FileHandler('loger_data.log'))
 
 engine = create_engine(DATABASE_URI)
-
 
 Session = sessionmaker(bind=engine)
 session = Session()
