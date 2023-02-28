@@ -2,13 +2,13 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, ReplyKeyboardRemove
 
-from src.config import ADMINS_ID
-from src.database.user_crud import get_user_by_id
-from src.filters import IsPrivate
-from src.keayboards.main_menu import main_menu_buttons, admin_menu
-from src.loader import dp
-from src.messages.message_text import HELLO_TEXT, CANCEL_TEXT, START_AGAIN
-from src.states.leave_message_state import LeaveMessage, LeaveMessageMain
+from config import ADMINS_ID
+from database.user_crud import get_user_by_id
+from filters import IsPrivate
+from keayboards.main_menu import main_menu_buttons, admin_menu
+from loader import dp
+from messages.message_text import HELLO_TEXT, CANCEL_TEXT, START_AGAIN
+from states.leave_message_state import LeaveMessageMain
 
 
 def get_main_buttons(user_id):

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import Column as _, Integer, String, DateTime, Boolean
 
-from src.database.image_model import Base
+from database.image_model import Base
 
 
 class UserMessage(Base):

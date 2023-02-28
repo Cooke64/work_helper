@@ -2,31 +2,35 @@ from aiogram.types import (
     Message,
     CallbackQuery,
     InputMedia,
-    InputFile,
     ChatActions
 )
 
-from src.handlers.users.photo_slider_handler.slider_keyboard import (
+from handlers.users.photo_slider_handler.slider_keyboard import (
     items,
     get_photo_callback_keyboard,
     items_callback
 )
-from src.loader import dp, bot
+from loader import dp, bot
 
 
 @dp.message_handler(lambda message: 'Про Шереметьево' in message.text)
 async def get_photo_slider(message: Message):
-    photo_data = items[0]
+    if items:
+        photo_data = items[0]
+        await message.answer(
+            'Здесь вы можете узнать про Шереметьево, города рядом, природу и тд',
+        )
+        # отображает процесс отправки фото.
+        await bot.send_chat_action(message.chat.id, ChatActions.UPLOAD_PHOTO)
+        await bot.send_photo(
+            chat_id=message.chat.id,
+            photo=photo_data.get('image_url'),
+            caption=f'<b>{photo_data.get("display_name")}</b>',
+            reply_markup=get_photo_callback_keyboard()
+        )
+        return
     await message.answer(
-        'Здесь вы можете узнать про Шереметьево, города рядом, природу и тд',
-    )
-    # отображает процесс отправки фото.
-    await bot.send_chat_action(message.chat.id, ChatActions.UPLOAD_PHOTO)
-    await bot.send_photo(
-        chat_id=message.chat.id,
-        photo=photo_data.get('image_url'),
-        caption=f'<b>{photo_data.get("display_name")}</b>',
-        reply_markup=get_photo_callback_keyboard()
+        'Фоток пока нет, но скоро будут загружены',
     )
 
 

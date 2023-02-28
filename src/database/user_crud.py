@@ -1,5 +1,5 @@
-from src.database.user_model import UserMessage
-from src.main import session
+from database.user_model import UserMessage
+from main import session
 
 
 def get_user_by_id(user_id: int) -> UserMessage:

@@ -2,13 +2,13 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
-from src.database.user_crud import leave_message
-from src.keayboards.inline_buttons import benefits, duty
-from src.keayboards.main_menu import main_menu_buttons
-from src.loader import dp, bot
-from src.main import log
-from src.messages import benefits_message
-from src.states.leave_message_state import LeaveMessageMain
+from database.user_crud import leave_message
+from keayboards.inline_buttons import benefits, duty
+from keayboards.main_menu import main_menu_buttons
+from loader import dp, bot
+from main import log
+from messages import benefits_message
+from states.leave_message_state import LeaveMessageMain
 
 message_data = {
     # льготы

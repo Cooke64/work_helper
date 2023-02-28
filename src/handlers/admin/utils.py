@@ -1,4 +1,4 @@
-from src.database.user_model import UserMessage
+from database.user_model import UserMessage
 
 
 def show_all_users(user_data: list[UserMessage]) -> str:

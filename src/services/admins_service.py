@@ -2,7 +2,7 @@ import logging
 
 from aiogram import Dispatcher
 
-from src.config import ADMINS_ID
+from config import ADMINS_ID
 
 
 async def on_startup_netify(dp: Dispatcher):

@@ -2,24 +2,28 @@ import os
 
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv()
 
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
 
-DATABASE_URI = 'postgresql://postgres:12345678@localhost:5432/telegram'
+TOKEN = os.getenv('TOKEN')
+DB_PORT = os.getenv('DB_PORT')
+DB_USERNAME = os.getenv('DB_USERNAME')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_DATABASE = os.getenv('DB_DATABASE')
+DB_HOST = os.getenv('DB_HOST')
+DEBUG = (os.getenv('DEBUG') == 'True')
 
-TOKEN = '5643549852:AAF7FnnXnUk7xGQmshGZMbJ4xp89sNZDygY'
+REDIS_HOST = os.getenv("REDIS_HOST", default="localhost")
+REDIS_PORT = os.getenv("REDIS_PORT", default=6379)
 
-ADMINS_ID = [
-    514541144,
-]
-DB_PORT = str(os.getenv('DB_PORT'))
-DB_USERNAME = str(os.getenv('DB_USERNAME'))
-DB_PASSWORD = str(os.getenv('DB_PASSWORD'))
-DB_DATABASE = str(os.getenv('DB_DATABASE'))
-DB_HOST = str(os.getenv('DB_HOST'))
+ADMINS_ID = []
 
-f = (
-    f"postgresql+psycopg2://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_DATABASE}")
+try:
+    ADMINS_ID.extend(list(map(int, os.getenv('ADMINS_ID').split(','))))
+except AttributeError:
+    pass
+
+local_url = 'postgresql://postgres:12345678@localhost:5432/telegram'
+server_url = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}'
+DATABASE_URI = local_url if DEBUG else server_url
 

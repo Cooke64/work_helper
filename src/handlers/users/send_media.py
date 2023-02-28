@@ -1,9 +1,9 @@
 from aiogram import types
 
-from src.config import ADMINS_ID
-from src.database.image_crud import add_photo_in_db
-from src.loader import dp
-from src.main import log
+from config import ADMINS_ID
+from database.image_crud import add_photo_in_db
+from loader import dp
+from main import log
 
 
 def get_photo_data(message: types.Message) -> tuple[str, str, str]:

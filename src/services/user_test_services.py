@@ -3,8 +3,8 @@ from datetime import datetime
 
 from aiogram.types import CallbackQuery, Message
 
-from src.services.magic_numbers import Nums
-from src.states.user_test_state import UserData
+from services.magic_numbers import Nums
+from states.user_test_state import UserData
 
 
 def get_user_passed_test(call: CallbackQuery, test_result: bool) -> str:

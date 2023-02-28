@@ -1,5 +1,5 @@
-from src.database.image_model import PhotosIds
-from src.main import session
+from database.image_model import PhotosIds
+from main import session
 
 
 def get_all_photos():

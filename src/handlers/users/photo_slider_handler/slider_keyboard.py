@@ -1,20 +1,28 @@
-import glob
-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-from src.database.image_crud import get_all_photos
-from src.database.image_model import PhotosIds
-from src.messages.photo_about_descriptions import desc
+from database.image_crud import get_all_photos
+from database.image_model import PhotosIds
+from messages.photo_about_descriptions import desc
 
 items_callback = CallbackData("PhotoItems", "page")
 
-items_from_bd: list[PhotosIds] = get_all_photos()
-# загрузка фоток по id из бд
-items = [
-    {'slug': img.file_unique_id, 'image_url': img.photo_id,
-     'display_name': descr} for img, descr in zip(items_from_bd, desc)
-]
+
+def get_items():
+    try:
+        items_from_bd: list[PhotosIds] = get_all_photos()
+        # загрузка фоток по id из бд
+        photos = [
+            {'slug': img.file_unique_id, 'image_url': img.photo_id,
+             'display_name': descr} for img, descr in zip(items_from_bd, desc)
+        ]
+        return photos
+    except Exception as e:
+        print(e)
+        pass
+
+
+items = get_items()
 
 
 def get_photo_callback_keyboard(page: int = 0) -> InlineKeyboardMarkup:

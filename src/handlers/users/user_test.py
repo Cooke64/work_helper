@@ -3,22 +3,23 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
-from src.config import ADMINS_ID
-from src.database.user_crud import (
+from config import ADMINS_ID
+from database.user_crud import (
     update_user_test,
     get_data_about_test
 )
-from src.keayboards.inline_buttons import TEST_USER_CHOICES
-from src.keayboards.main_menu import main_menu_buttons
-from src.loader import dp, bot
-from src.main import log
-from src.messages import message_text as ms
-from src.services.user_test_services import (
+from keayboards.inline_buttons import TEST_USER_CHOICES
+from keayboards.main_menu import main_menu_buttons
+from loader import dp, bot
+from main import log
+from messages import message_text as ms
+from services.user_test_services import (
     check_user_test,
     get_user_passed_test,
-    validate_phone_number, get_username_id
+    validate_phone_number,
+    get_username_id
 )
-from src.states.user_test_state import UserTestState
+from states.user_test_state import UserTestState
 
 
 @dp.message_handler(Text(equals='❕ Пройду ли я к вам?'))

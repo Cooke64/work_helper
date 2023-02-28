@@ -1,7 +1,7 @@
 from sqlalchemy import and_
 
-from src.database.user_model import UserMessage
-from src.main import session
+from database.user_model import UserMessage
+from main import session
 
 
 def count_users() -> int:

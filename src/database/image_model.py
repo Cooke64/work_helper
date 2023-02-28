@@ -1,4 +1,3 @@
-
 from sqlalchemy import Column as _, Integer, String, Text
 from sqlalchemy.orm import declarative_base
 
@@ -11,7 +10,7 @@ class PhotosIds(Base):
     photo_id это id файла, полученное от TG.
     filedescr описание файла, которое опционно может быть добавлено
     """
-    __tablename__ = 'photos ids'
+    __tablename__ = 'photosids'
     id = _(Integer, primary_key=True)
     file_unique_id = _(String(255), nullable=False, unique=True)
     photo_id = _(String(255), nullable=False)

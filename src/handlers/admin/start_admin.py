@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 
-from src.keayboards.admin_keyboards import main_menu_admins
-from src.loader import dp
+from keayboards.admin_keyboards import main_menu_admins
+from loader import dp
 
 
 @dp.message_handler(Text(equals='Админ панель'))

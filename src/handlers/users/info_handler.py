@@ -1,9 +1,9 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 
-from src.keayboards.inline_buttons import about_us_inline, duty, benefits
-from src.loader import dp
-from src.messages.message_text import TEST_SUCCESS_NOT_CALL, ABOUT_PORT
+from keayboards.inline_buttons import duty, benefits
+from loader import dp
+from messages.message_text import ABOUT_PORT
 
 
 @dp.message_handler(Text(equals='Чем предстоит заниматься?'))

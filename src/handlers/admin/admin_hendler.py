@@ -1,12 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from src.config import ADMINS_ID
-from src.database import admin_crud as crud
-from src.handlers.admin.utils import show_all_users
-from src.loader import dp
+from config import ADMINS_ID
+from database import admin_crud as crud
+from handlers.admin.utils import show_all_users
+from loader import dp
 
-from src.states.leave_message_state import LeaveMessage
+from states.leave_message_state import LeaveMessage
 
 admin_commands = {
     'Все заявки': crud.show_limit_users,
