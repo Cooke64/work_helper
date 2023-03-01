@@ -27,7 +27,7 @@ def show_limit_users() -> UserMessage:
 def get_passed_test() -> UserMessage | bool:
     user_passed: list[UserMessage] = session.query(UserMessage).order_by(
         UserMessage.created_on.desc()
-    ).filter(UserMessage.passed_test == True).all()
+    ).filter(UserMessage.can_serve == True).all()
     return user_passed if user_passed else False
 
 

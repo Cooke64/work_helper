@@ -11,7 +11,7 @@ main_menu_buttons = ReplyKeyboardMarkup(
             KeyboardButton(text='✉ Оставить сообщение'),
         ],
         [
-            KeyboardButton(text='❓Узнать статус трудоустройства'),
+            KeyboardButton(text='Новости'),
         ],
     ],
     resize_keyboard=True
@@ -23,6 +23,7 @@ admin_menu = ReplyKeyboardMarkup(
             KeyboardButton(text='❕ Пройду ли я к вам?'),
         ],
         [
+            KeyboardButton(text='Новости'),
             KeyboardButton(text='Админ панель'),
         ],
     ],

@@ -17,15 +17,13 @@ def get_items():
              'display_name': descr} for img, descr in zip(items_from_bd, desc)
         ]
         return photos
-    except Exception as e:
+    except (KeyError, ValueError) as e:
         print(e)
         pass
 
 
-items = get_items()
-
-
 def get_photo_callback_keyboard(page: int = 0) -> InlineKeyboardMarkup:
+    items = get_items()
     keyboard = InlineKeyboardMarkup(row_width=1)
     has_next_page = len(items) > page + 1
 

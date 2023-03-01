@@ -20,6 +20,7 @@ def get_photo_data(message: types.Message) -> tuple[str, str, str]:
 async def send_photo_id_to_user(message: types.Message):
     photo_id, caption, file_unique_id = get_photo_data(message)
     if message.from_user.id in ADMINS_ID:
+        # с описанием добавляем фотки для хендлера.
         added = add_photo_in_db(photo_id, file_unique_id, caption)
         await message.reply(
             'Добавлено новое фото' if added else 'Такое уже есть')

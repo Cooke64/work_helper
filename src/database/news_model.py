@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column as _, Integer, String, DateTime, Boolean, Text
+from sqlalchemy import Column as _, Integer, String, DateTime, Text
 
 from database.image_model import Base
 
@@ -9,23 +9,15 @@ class NewsPost(Base):
     __tablename__ = 'newspost'
 
     id = _(Integer(), primary_key=True)
-    title = _(String(100), nullable=False, unique=True)
-    message = _(String(100), nullable=True)
+    title = _(String(100), nullable=False)
+    text = _(Text, nullable=False)
     created_on = _(DateTime(), default=datetime.now)
-    passed_test = _(Boolean, default=False)
-    can_serve = _(Boolean, default=False)
-    phone = _(String(100), nullable=True)
+    photo_id = _(String(199), default=True)
 
     def __repr__(self) -> str:
         pk = self.id
-        name = self.username
-        mes = self.message
-        serv = self.can_serve
-        test = self.passed_test
-        phone = self.phone
-        return f"User(id={pk!r}," \
-               f" username={name!r}," \
-               f" message={mes!r}," \
-               f"can_serve={serv!r}," \
-               f" passed_test={test!r}," \
-               f" phone={phone})"
+        return f"NewsPost(id={pk!r}," \
+               f"title={self.title!r}," \
+               f" text={self.text!r}," \
+               f" created_on={self.created_on!r}," \
+               f" photo_id={self.photo_id!r},"
