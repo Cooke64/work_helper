@@ -16,7 +16,6 @@ from loader import dp, bot
 @dp.message_handler(lambda message: 'Про Шереметьево' in message.text)
 async def get_photo_slider(message: Message):
     items = get_items()
-    print
     if items:
         photo_data = items[0]
         await message.answer(
@@ -39,7 +38,7 @@ async def get_photo_slider(message: Message):
 @dp.callback_query_handler(items_callback.filter())
 async def photo_callback_handler(query: CallbackQuery, callback_data: dict):
     page = int(callback_data.get('page'))
-
+    items = get_items()
     items_data = items[page]
     caption = f"<b>{items_data.get('display_name')}</b>"
     keyboard = get_photo_callback_keyboard(page)
