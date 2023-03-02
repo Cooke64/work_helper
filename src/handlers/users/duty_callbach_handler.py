@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
@@ -6,7 +8,6 @@ from database.user_crud import leave_message
 from keayboards.inline_buttons import benefits, duty
 from keayboards.main_menu import main_menu_buttons
 from loader import dp, bot
-from main import log
 from messages import benefits_message
 from states.leave_message_state import LeaveMessageMain
 
@@ -19,12 +20,13 @@ message_data = {
     # обязанности
     'duty_обязанности': benefits_message.DUTY,
     'duty_запреты': benefits_message.PROHIBITIONS,
+    'duty_требования': benefits_message.REQUIREMENTS
 
 }
 
 reply_keyboard = {
     'benefits': (benefits, "Про зарплату, льготы и т.д."),
-    'duty': (duty, "Обязанности, ограничения"),
+    'duty': (duty, "Требования, обязанности, ограничения"),
 }
 
 
@@ -47,8 +49,8 @@ async def save_message_from_user(message: Message, state: FSMContext):
     data = await state.get_data()
     username = message.from_user.username
     message_from_user = data.get('message_from')
-    log.info(
-        f'Отправлено новое обращение от {username}\n {message_from_user}\n')
+    logging.info(
+        f'Отправлено новое обращение от {username}\n{message_from_user}\n')
     await message.answer(
         'Мы приняли ваше обращение и готовим на него ответ. А пока вы можете ознакомиться с остальной информацией',
         reply_markup=main_menu_buttons

@@ -12,7 +12,7 @@ class NewsPost(Base):
     title = _(String(100), nullable=False)
     text = _(Text, nullable=False)
     created_on = _(DateTime(), default=datetime.now)
-    photo_id = _(String(199), default=True)
+    photo_id = _(String(199), nullable=True)
 
     def __repr__(self) -> str:
         pk = self.id

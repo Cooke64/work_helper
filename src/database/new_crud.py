@@ -8,11 +8,8 @@ def show_limit_news() -> NewsPost:
     ).limit(10).all()
 
 
-def create_news_item(
-        title: str,
-        text: str,
-        photo_id: int | None = None
-) -> None:
+def create_news_item(title: str, text: str,
+                     photo_id: int | None = None) -> None:
     news_item = NewsPost(
         title=title,
         text=text,
@@ -22,8 +19,11 @@ def create_news_item(
     session.commit()
 
 
-def updat_post(post_title, photo_id):
-    post: NewsPost = session.query(NewsPost).filter(NewsPost.title == post_title).first()
+def updat_post(post_title, photo_id, text=None):
+    post: NewsPost = session.query(NewsPost).filter(
+        NewsPost.title == post_title).first()
     if post:
         post.photo_id = photo_id
         session.commit()
+    else:
+        create_news_item(post_title, text, photo_id)

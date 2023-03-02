@@ -17,4 +17,3 @@ storage = RedisStorage2(
 )
 
 dp = Dispatcher(bot, storage=storage)
-# dp = Dispatcher(bot, storage=MemoryStorage())

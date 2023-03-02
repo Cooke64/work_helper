@@ -1,3 +1,5 @@
+import logging
+
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, ReplyKeyboardRemove
@@ -22,7 +24,7 @@ async def run_start_command(messages: Message):
     buttons = get_main_buttons(messages.from_user.id)
     mes = f'Привет, {messages.from_user.full_name}.\n{HELLO_TEXT}'
     await messages.answer(mes, reply_markup=buttons)
-    print(messages.from_user)
+    logging.debug(messages.from_user)
 
 
 @dp.message_handler(commands="cancel", state="*")

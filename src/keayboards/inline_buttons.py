@@ -15,6 +15,9 @@ duty = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
+                text='Требования', callback_data='duty_требования'
+            ),
+            InlineKeyboardButton(
                 text='Обязанности', callback_data='duty_обязанности'
             ),
             InlineKeyboardButton(
@@ -37,7 +40,8 @@ benefits = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text='Порядок начисления пенсии', callback_data='benefits_пенсия'
+                text='Порядок начисления пенсии',
+                callback_data='benefits_пенсия'
             ),
             InlineKeyboardButton(
                 text='Отпуск', callback_data='benefits_отпуск'

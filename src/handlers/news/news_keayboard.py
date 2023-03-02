@@ -38,13 +38,6 @@ def get_keyboard_news(page: int = 0) -> InlineKeyboardMarkup:
             )
         )
 
-    # keyboard.add(
-    #     InlineKeyboardButton(
-    #         text=f'{page + 1}',
-    #         callback_data='dont_click_me'
-    #     )
-    # )
-
     if has_next_page:
         keyboard.add(
             InlineKeyboardButton(

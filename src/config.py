@@ -25,3 +25,6 @@ except AttributeError:
 local_url = 'postgresql://postgres:12345678@localhost:5432/telegram'
 server_url = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}'
 DATABASE_URI = local_url if DEBUG else server_url
+
+
+BASIC_PHOTO = 'AgACAgIAAxkBAAIVomQAAab46Yo9K1v-JUUnyophQxdqygAC4MMxGxVPCEhgpSbShOiaTAEAAwIAA3kAAy4E'

@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
@@ -11,7 +13,6 @@ from database.user_crud import (
 from keayboards.inline_buttons import TEST_USER_CHOICES
 from keayboards.main_menu import main_menu_buttons
 from loader import dp, bot
-from main import log
 from messages import message_text as ms
 from services.user_test_services import (
     check_user_test,
@@ -101,7 +102,7 @@ async def try_drugs_and_get_result(call: CallbackQuery, state: FSMContext):
     reply = await check_user_test(data)
     passed_test = get_user_passed_test(call, reply)
     user_name, user_id = get_username_id(call)
-    log.info(f'Пользователь закончил тест. Обратить внимание. {passed_test}')
+    logging.info(f'Пользователь закончил тест. Обратить внимание. {passed_test}')
     if not reply:
         await call.message.answer(
             ms.NOt_PASSED_TEXT, reply_markup=main_menu_buttons
@@ -151,7 +152,7 @@ async def get_phone_number_from_user(message: types.Message,
     for admin_id in ADMINS_ID:
         mes = f'Пользователь оставил номер телефона для связи {phone}'
         await bot.send_message(admin_id, mes)
-        log.info(mes)
+        logging.info(mes)
     user_name, user_id = get_username_id(message)
     update_user_test(user_id, user_name, can_serve=True, phone=phone)
     await state.finish()
