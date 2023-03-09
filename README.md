@@ -30,3 +30,31 @@ docker pull cooke09/bot_helper
 ## Планы
 - Перенос платформы на Aiogram Version 3.0 и SQLAlchemy Version 2.0 для полной асихронности и удобства в разработки. 
 - Добавить Alembic для автоматизации миграций
+
+
+## Запуск на сервере:
+- Установить docker
+```
+sudo apt install docker.io
+```
+- Установить docker - compose
+```
+sudo apt-get install docker-compose
+```
+- При проверке версии может возникнуть ошибка. Проверить версию 
+```
+docker - version
+```
+- При необходимости дать права
+```
+sudo chmod 666 /var/run/docker.sock
+```
+
+- Скопировать папку на сервер
+```
+- scp -r src/ <username>@<host>:/home/<username>
+```
+- Запустить контейнер
+```
+- docker - compose up -d --build
+```
