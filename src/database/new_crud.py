@@ -2,7 +2,7 @@ from database.news_model import NewsPost
 from main import session
 
 
-def show_limit_news() -> NewsPost:
+def show_limit_news() -> list[NewsPost]:
     return session.query(NewsPost).order_by(
         NewsPost.created_on.desc()
     ).limit(10).all()
@@ -19,7 +19,7 @@ def create_news_item(title: str, text: str,
     session.commit()
 
 
-def updat_post(post_title, photo_id, text=None):
+def updat_post(post_title: str, photo_id: int, text=None):
     post: NewsPost = session.query(NewsPost).filter(
         NewsPost.title == post_title).first()
     if post:
@@ -27,3 +27,8 @@ def updat_post(post_title, photo_id, text=None):
         session.commit()
     else:
         create_news_item(post_title, text, photo_id)
+
+
+def delete_post(post_title: str) -> None:
+    session.query(NewsPost).filter(
+        NewsPost.title == post_title).delete()

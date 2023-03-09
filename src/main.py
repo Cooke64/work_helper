@@ -12,8 +12,8 @@ from services.set_bot_commands import set_commands
 
 logging.basicConfig(
     level=logging.INFO,
-    filename='loger_data.log',
-    filemode='w',
+    # filename='loger_data.log',
+    # filemode='w',
     format='%(asctime)s, %(levelname)s, %(name)s, %(message)s'
 )
 

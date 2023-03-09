@@ -1,15 +1,16 @@
+import logging
+
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-
+from config import ADMINS_ID
 from database.new_crud import show_limit_news
 from database.news_model import NewsPost
-
 
 news_callback = CallbackData("NewsPost", "page")
 
 
-def get_photo_items():
+def get_photo_items() -> list[dict[str]]:
     try:
         items_from_bd: list[NewsPost] = show_limit_news()
         new_items = [
@@ -21,8 +22,7 @@ def get_photo_items():
         ]
         return new_items
     except (KeyError, ValueError) as e:
-        print(e)
-        pass
+        logging.error(e)
 
 
 def get_keyboard_news(page: int = 0) -> InlineKeyboardMarkup:
@@ -47,3 +47,12 @@ def get_keyboard_news(page: int = 0) -> InlineKeyboardMarkup:
         )
 
     return keyboard
+
+
+def update_kb(user_id, title, keyboard):
+    if user_id in ADMINS_ID:
+        keyboard.add(
+            InlineKeyboardButton(
+                text=f'Удалить запись#{title}', callback_data='удалить пост'
+            ),
+        )
