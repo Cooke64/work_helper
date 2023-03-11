@@ -34,16 +34,18 @@ def get_post_data(items_data: dict[str], page) -> tuple[
 @dp.message_handler(Text(equals='Новости'))
 async def show_first_news_item(message: Message):
     items = get_photo_items()
+    keyboard = get_keyboard_news()
     if items:
         item = items[0]
         photo = item.get('photo_id')
         if not photo:
             photo = BASIC_PHOTO
+            update_kb(message.from_user.id, item.get('title'), keyboard)
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=photo,
             caption=create_text(item),
-            reply_markup=get_keyboard_news()
+            reply_markup=keyboard
         )
     else:
         await message.answer('Новостей нет')
@@ -64,9 +66,9 @@ async def news_callback_handler(query: CallbackQuery, callback_data: dict):
 @dp.callback_query_handler(text=['удалить пост'])
 async def delete_news(call: CallbackQuery):
     post_title = call.message.caption.split()[0]
-    try:
-        delete_post(post_title)
-        logging.info(f'Пост удален с заголовком {post_title}')
-    except Exception as e:
-        logging.info(f'Какая-то ошибка в удалении поста\n{e}')
+    # try:
+    delete_post(post_title)
+    logging.info(f'Пост удален с заголовком {post_title}')
+    # except Exception as e:
+    #     logging.info(f'Какая-то ошибка в удалении поста\n{e}')
     await call.answer('Пост удален с заголовком {post_title}')

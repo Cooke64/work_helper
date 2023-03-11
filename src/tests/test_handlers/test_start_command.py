@@ -14,3 +14,4 @@ async def test_start_handler():
         f'Привет, {message.from_user.full_name}.\n{HELLO_TEXT}',
         reply_markup=get_main_buttons(message.from_user.id)
     )
+

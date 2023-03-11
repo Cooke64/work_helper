@@ -30,5 +30,8 @@ def updat_post(post_title: str, photo_id: int, text=None):
 
 
 def delete_post(post_title: str) -> None:
-    session.query(NewsPost).filter(
-        NewsPost.title == post_title).delete()
+    post = session.query(NewsPost).filter(
+            NewsPost.title.ilike(f'%{post_title}%')
+    ).first()
+    session.delete(post)
+    session.commit()

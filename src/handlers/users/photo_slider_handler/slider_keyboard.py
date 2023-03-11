@@ -1,3 +1,5 @@
+import logging
+
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
@@ -18,7 +20,7 @@ def get_items():
         ]
         return photos
     except (KeyError, ValueError) as e:
-        print(e)
+        logging.error(e)
         pass
 
 

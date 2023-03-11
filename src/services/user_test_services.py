@@ -17,7 +17,7 @@ def get_user_passed_test(call: CallbackQuery, test_result: bool) -> str:
     return message
 
 
-async def check_user_test(data: dict[int]) -> bool:
+def check_user_test(data: dict[str]) -> bool:
     user_data = UserData(**data)
     young = Nums.too_young.value < user_data.age < Nums.too_old.value
     params = user_data.has_crime or user_data.try_drugs or not user_data.nationality
@@ -37,3 +37,6 @@ def get_username_id(instance: CallbackQuery | Message):
     username = instance.from_user.username
     first_name = instance.from_user.first_name
     return username or first_name or user_id, user_id
+
+
+print(validate_phone_number('123'))
