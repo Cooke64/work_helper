@@ -108,3 +108,5 @@ dmypy.json
 .idea
 messages/
 media/
+
+reports/
