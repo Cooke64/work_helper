@@ -5,6 +5,7 @@ main_menu_admins = ReplyKeyboardMarkup(
         [
             KeyboardButton(text='Все заявки'),
             KeyboardButton(text='Кто прошел тест'),
+            KeyboardButton(text='Скачать отчет.'),
         ],
         [
             KeyboardButton(text='Создать новый пост'),

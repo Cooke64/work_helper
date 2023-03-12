@@ -1,0 +1,41 @@
+<h2>Список всех пользователей</h2>
+<ul>
+  {% for u in all_users -%}
+    <li>Телеграм ID: {{u.id}}</li>
+    <li>{{u.username}}</li>
+    <li>Оставил сообщение: {{u.message}}</li>
+    <li>{{"Годен" if u.can_serve else "Не годен"}}</li>
+    <li>{{"Прошел тест" if u.passed_test else "Не прошел тест"}}</li>
+    <li>{{u.phone if u.phone else "Не оставил сообщение"}}</li>
+  {% endfor -%}
+</ul>
+
+<h2>Список прощедших тест.</h2>
+<ul>
+  {% if passed -%}
+    {% for u in passed -%}
+      <li>Телеграм ID: {{u.id}}</li>
+      <li>{{u.username}}</li>
+      <li>Оставил сообщение: {{u.message}}</li>
+      <li>{{"Годен" if u.can_serve else "Не годен"}}</li>
+      <li>{{"u.passed_test"}}</li>
+      <li>{{u.phone if u.phone else "Не оставил сообщение"}}</li>
+    {% endfor -%}
+  {%else -%} Пока никто не прошел тест
+  {% endif %}
+</ul>
+
+<h2>Оставили номер телефона.</h2>
+<ul>
+  {% if with_phone -%}
+    {% for u in with_phone -%}
+      <li>Телеграм ID: {{u.id}}</li>
+      <li>{{u.username}}</li>
+      <li>Оставил сообщение: {{u.message}}</li>
+      <li>{{"Годен"}}</li>
+      <li>{{"Прошел тест"}}</li>
+      <li>{{u.phone}}</li>
+    {% endfor -%}
+  {%else -%} Номер никто не оставил.
+  {% endif %}
+</ul>

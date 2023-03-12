@@ -55,7 +55,12 @@ async def show_first_news_item(message: Message):
 async def news_callback_handler(query: CallbackQuery, callback_data: dict):
     page = int(callback_data.get('page'))
     items = get_photo_items()
-    items_data = items[page]
+
+    try:
+        items_data = items[page]
+    except IndexError:
+        items_data = items[0]
+
     photo, caption, keyboard = get_post_data(items_data, page)
     update_kb(query.from_user.id, items_data.get("title"), keyboard)
     await query.message.edit_media(
@@ -66,9 +71,6 @@ async def news_callback_handler(query: CallbackQuery, callback_data: dict):
 @dp.callback_query_handler(text=['удалить пост'])
 async def delete_news(call: CallbackQuery):
     post_title = call.message.caption.split()[0]
-    # try:
     delete_post(post_title)
     logging.info(f'Пост удален с заголовком {post_title}')
-    # except Exception as e:
-    #     logging.info(f'Какая-то ошибка в удалении поста\n{e}')
     await call.answer('Пост удален с заголовком {post_title}')

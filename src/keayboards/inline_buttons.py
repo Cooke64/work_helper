@@ -64,3 +64,20 @@ TEST_USER_CHOICES = InlineKeyboardMarkup(
     ],
     row_width=2,
 )
+
+ADMIN_REPORT_KB = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='В формате html', callback_data='html'
+            ),
+            InlineKeyboardButton(
+                text='В формате exel', callback_data='exel'
+            ),
+            InlineKeyboardButton(
+                text='Текстовый документ', callback_data='txt'
+            ),
+        ],
+    ],
+    row_width=2,
+)

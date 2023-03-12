@@ -8,13 +8,13 @@ def count_users() -> int:
     return session.query(UserMessage).count()
 
 
-def get_all_users() -> UserMessage:
+def get_all_users() -> list[UserMessage]:
     return session.query(UserMessage).order_by(
         UserMessage.created_on.desc()
     ).all()
 
 
-def show_limit_users() -> UserMessage:
+def show_limit_users() -> list[UserMessage]:
     amount = count_users()
     limit = 10
     if amount < limit:
@@ -24,7 +24,7 @@ def show_limit_users() -> UserMessage:
     ).limit(10).all()
 
 
-def get_passed_test() -> UserMessage | bool:
+def get_passed_test() -> list[UserMessage] | bool:
     user_passed: list[UserMessage] = session.query(UserMessage).order_by(
         UserMessage.created_on.desc()
     ).filter(UserMessage.can_serve == True).all()
@@ -39,3 +39,10 @@ def get_users_id() -> list[int]:
         UserMessage.can_serve == True,
     )).all()
     return [user.id for user in user_passed]
+
+
+def get_user_with_phones() -> list[UserMessage]:
+    users_with_phones: list[UserMessage] = session.query(UserMessage).order_by(
+        UserMessage.created_on.desc()
+    ).filter(UserMessage.phone != None).all()
+    return users_with_phones

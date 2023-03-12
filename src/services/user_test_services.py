@@ -37,6 +37,3 @@ def get_username_id(instance: CallbackQuery | Message):
     username = instance.from_user.username
     first_name = instance.from_user.first_name
     return username or first_name or user_id, user_id
-
-
-print(validate_phone_number('123'))
