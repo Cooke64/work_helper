@@ -33,7 +33,7 @@ async def on_startup(dp):
     dp.middleware.setup(BotMiddleware())
     await on_startup_netify(dp)
     await set_commands(dp)
-    logging.debug('Работаем')
+    logging.info('Работаем')
 
 if __name__ == '__main__':
     try:
