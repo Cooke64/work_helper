@@ -38,7 +38,6 @@ async def on_startup(dp):
 if __name__ == '__main__':
     try:
         from handlers import dp
-
         executor.start_polling(dp, on_startup=on_startup)
 
     except Exception as e:

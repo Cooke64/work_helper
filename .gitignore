@@ -109,4 +109,4 @@ dmypy.json
 messages/
 media/
 
-reports/
+src/handlers/admin/report_admin/ready_reports/
