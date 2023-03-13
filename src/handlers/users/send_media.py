@@ -2,7 +2,7 @@ import logging
 
 from aiogram import types
 
-from config import ADMINS_ID
+from pydantic_config import settings
 from database.image_crud import add_photo_in_db
 from loader import dp
 
@@ -20,7 +20,7 @@ def get_photo_data(message: types.Message) -> tuple[str, str, str]:
 @dp.message_handler(content_types=types.ContentType.PHOTO)
 async def send_photo_id_to_user(message: types.Message):
     photo_id, caption, file_unique_id = get_photo_data(message)
-    if message.from_user.id in ADMINS_ID:
+    if message.from_user.id in settings.ADMINS_ID:
         # с описанием добавляем фотки для хендлера.
         added = add_photo_in_db(photo_id, file_unique_id, caption)
         await message.reply(
@@ -32,7 +32,7 @@ async def send_photo_id_to_user(message: types.Message):
 
 @dp.message_handler(content_types=types.ContentType.VIDEO)
 async def send_video_id_to_user(message: types.Message):
-    if message.from_user.id in ADMINS_ID:
+    if message.from_user.id in settings.ADMINS_ID:
         await message.reply(message.video.file_id)
         logging.info('Добавлено новое видео')
         return

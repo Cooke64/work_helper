@@ -4,7 +4,6 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery, InputMedia, \
     InlineKeyboardMarkup
 
-from config import BASIC_PHOTO
 from database.new_crud import delete_post
 from handlers.news.news_keayboard import (
     get_photo_items,
@@ -12,6 +11,7 @@ from handlers.news.news_keayboard import (
     news_callback, update_kb
 )
 from loader import dp, bot
+from pydantic_config import settings
 
 
 def create_text(item: dict[str]) -> str:
@@ -27,7 +27,7 @@ def get_post_data(items_data: dict[str], page) -> tuple[
     photo = items_data.get('photo_id')
     caption = create_text(items_data)
     if not photo:
-        photo = BASIC_PHOTO
+        photo = settings.BASIC_PHOTO
     return photo, caption, keyboard
 
 
@@ -39,7 +39,7 @@ async def show_first_news_item(message: Message):
         item = items[0]
         photo = item.get('photo_id')
         if not photo:
-            photo = BASIC_PHOTO
+            photo = settings.BASIC_PHOTO
             update_kb(message.from_user.id, item.get('title'), keyboard)
         await bot.send_photo(
             chat_id=message.chat.id,

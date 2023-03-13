@@ -6,15 +6,14 @@
 from aiogram import Bot, types, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
+from pydantic_config import settings
 
-import config
-
-bot = Bot(token=config.TOKEN, parse_mode=types.ParseMode.HTML)
+bot = Bot(token=settings.TOKEN, parse_mode=types.ParseMode.HTML)
 redis = RedisStorage2(
-    host=config.REDIS_HOST,
-    port=config.REDIS_PORT,
+    host=settings.REDIS_HOST,
+    port=settings.REDIS_PORT,
     db=0,
 )
-storage = MemoryStorage() if config.DEBUG else redis
+storage = MemoryStorage() if settings.DEBUG else redis
 
 dp = Dispatcher(bot, storage=storage)

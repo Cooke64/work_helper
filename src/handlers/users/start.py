@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, ReplyKeyboardRemove
 
-from config import ADMINS_ID
+from pydantic_config import settings
 from database.user_crud import get_user_by_id
 from filters import IsPrivate
 from keayboards.main_menu import main_menu_buttons, admin_menu
@@ -14,7 +14,7 @@ from states.leave_message_state import LeaveMessageMain
 
 
 def get_main_buttons(user_id):
-    if user_id in ADMINS_ID:
+    if user_id in settings.ADMINS_ID:
         return admin_menu
     return main_menu_buttons
 

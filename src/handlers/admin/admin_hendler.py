@@ -1,10 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import ADMINS_ID
 from database import admin_crud as crud
 from handlers.admin.utils import show_all_users
 from loader import dp
+from pydantic_config import settings
 
 from states.leave_message_state import LeaveMessage
 
@@ -14,7 +14,7 @@ admin_commands = {
 }
 send_message = {
     '✉ Отправить сообщение всем пользователям': crud.get_users_id,
-    '✉ Отправить сообщение всем админам': lambda: ADMINS_ID
+    '✉ Отправить сообщение всем админам': lambda: settings.ADMINS_ID
 }
 
 

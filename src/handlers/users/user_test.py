@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
-from config import ADMINS_ID
+from pydantic_config import settings
 from database.user_crud import (
     update_user_test,
     get_data_about_test
@@ -99,7 +99,7 @@ async def has_crime(call: CallbackQuery, state: FSMContext):
 async def try_drugs_and_get_result(call: CallbackQuery, state: FSMContext):
     await state.update_data(try_drugs=int(call.data))
     data = await state.get_data()
-    reply = await check_user_test(data)
+    reply = check_user_test(data)
     passed_test = get_user_passed_test(call, reply)
     user_name, user_id = get_username_id(call)
     logging.info(f'Пользователь закончил тест. Обратить внимание. {passed_test}')
@@ -149,7 +149,7 @@ async def get_phone_number_from_user(message: types.Message,
     )
     phone_data = await state.get_data()
     phone = phone_data.get("phone_number")
-    for admin_id in ADMINS_ID:
+    for admin_id in settings.ADMINS_ID:
         mes = f'Пользователь оставил номер телефона для связи {phone}'
         await bot.send_message(admin_id, mes)
         logging.info(mes)

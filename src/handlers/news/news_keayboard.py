@@ -3,7 +3,7 @@ import logging
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-from config import ADMINS_ID
+from pydantic_config import settings
 from database.new_crud import show_limit_news
 from database.news_model import NewsPost
 
@@ -50,7 +50,7 @@ def get_keyboard_news(page: int = 0) -> InlineKeyboardMarkup:
 
 
 def update_kb(user_id, title, keyboard):
-    if user_id in ADMINS_ID:
+    if user_id in settings.ADMINS_ID:
         keyboard.add(
             InlineKeyboardButton(
                 text=f'Удалить запись#{title}', callback_data='удалить пост'
