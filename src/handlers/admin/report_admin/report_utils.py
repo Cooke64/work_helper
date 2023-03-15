@@ -1,7 +1,7 @@
 import os
 import logging
 
-
+from celery_app.celery_app import create_report
 from handlers.admin.report_admin import create_report_template as tmp
 from pydantic_config import settings
 
@@ -30,6 +30,6 @@ def get_filename(type_report: str = 'html') -> str:
         local_path = 'C:\\DEV\\work_helper\\src\\handlers\\admin\\report_admin'
         docker_parh = '\\app\\handlers\\admin\\report_admin'
         os.chdir(local_path if settings.DEBUG else docker_parh)
-        write_file(file_name, type_report)
+        create_report(file_name, type_report)
     finally:
         return file_name

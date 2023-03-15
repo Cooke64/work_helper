@@ -2,21 +2,14 @@ import logging
 
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 
-from pydantic_config import settings
 from database.user_crud import get_user_by_id
 from filters import IsPrivate
-from keayboards.main_menu import main_menu_buttons, admin_menu
-from loader import dp
+from keayboards.inline_buttons import SEND_MESSAGE_AGAIN
+from loader import dp, bot
 from messages.message_text import HELLO_TEXT, CANCEL_TEXT, START_AGAIN
-from states.leave_message_state import LeaveMessageMain
-
-
-def get_main_buttons(user_id):
-    if user_id in settings.ADMINS_ID:
-        return admin_menu
-    return main_menu_buttons
+from services.start_bot_service import get_main_buttons, start_leaving_message
 
 
 @dp.message_handler(IsPrivate(), text='/start')
@@ -48,10 +41,14 @@ async def get_message_from_user(message: Message):
     user = get_user_by_id(message.from_user.id)
     if user and user.message:
         await message.answer(
-            'Ваше обращение в обработке'
+            'Ваше обращение в обработке',
+            reply_markup=SEND_MESSAGE_AGAIN
         )
         return
-    await message.answer(
-        'Оставьте сообщение и как мы ответим вам можно скорее!'
-    )
-    await LeaveMessageMain.message_from.set()
+    await start_leaving_message(message)
+
+
+@dp.callback_query_handler(Text(equals='send_agein'))
+async def get_message_from_user(call: CallbackQuery):
+    await bot.delete_message(call.message.chat.id, call.message.message_id)
+    await start_leaving_message(call)

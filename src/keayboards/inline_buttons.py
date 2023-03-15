@@ -81,3 +81,24 @@ ADMIN_REPORT_KB = InlineKeyboardMarkup(
     ],
     row_width=2,
 )
+
+
+SEND_MESSAGE_AGAIN = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Оставить новое сообщение', callback_data='send_agein'
+            ),
+        ],
+    ],
+)
+
+PASS_TEST_AGAIN = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Пройти тест заново', callback_data='test_agein'
+            ),
+        ],
+    ],
+)

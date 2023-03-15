@@ -12,7 +12,7 @@ def leave_message(user_id: int, message: str, username: str | None = None):
     username = username or user_id
     if not user:
         create_user(user_id, username, message)
-    elif not user.message:
+    else:
         user.message = message
         session.commit()
 
@@ -42,6 +42,12 @@ def get_data_about_test(user_id: int) -> tuple[bool, bool]:
     if data:
         return data.passed_test, data.can_serve
     return False, False
+
+
+def update_passed_test(user_id: int, passed_test: bool = False):
+    user = get_user_by_id(user_id)
+    user.passed_test = passed_test
+    session.commit()
 
 
 def update_user_test(user_id: int, username: str, can_serve: bool,

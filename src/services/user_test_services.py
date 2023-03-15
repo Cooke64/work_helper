@@ -3,8 +3,10 @@ from datetime import datetime
 
 from aiogram.types import CallbackQuery, Message
 
+from keayboards.inline_buttons import TEST_USER_CHOICES
+from messages.message_text import TEST_DESCRIPTION
 from services.magic_numbers import Nums
-from states.user_test_state import UserData
+from states.user_test_state import UserData, UserTestState
 
 
 def get_user_passed_test(call: CallbackQuery, test_result: bool) -> str:
@@ -32,8 +34,19 @@ def validate_phone_number(number: str) -> bool:
     return True if r_2.search(number) else False
 
 
-def get_username_id(instance: CallbackQuery | Message):
+def get_username_id(instance: CallbackQuery | Message) -> tuple[str, int]:
     user_id = instance.from_user.id
     username = instance.from_user.username
     first_name = instance.from_user.first_name
     return username or first_name or user_id, user_id
+
+
+async def start_passing_test(bot_type: Message | CallbackQuery) -> None:
+    messageor_query = isinstance(bot_type, Message)
+    replyer = bot_type.answer if messageor_query else bot_type.message.answer
+    await replyer(TEST_DESCRIPTION)
+    await replyer(
+        'Вы готовы начать тестирование?',
+        reply_markup=TEST_USER_CHOICES
+    )
+    await UserTestState.ready_to_start.set()
