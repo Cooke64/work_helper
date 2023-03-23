@@ -155,7 +155,7 @@ async def get_phone_number_from_user(message: types.Message,
     phone = phone_data.get("phone_number")
     for admin_id in settings.ADMINS_ID:
         mes = f'Пользователь оставил номер телефона для связи {phone}'
-        await bot.send_message(admin_id, mes)
+        # await bot.send_message(admin_id, mes)
         logging.info(mes)
     user_name, user_id = get_username_id(message)
     update_user_test(user_id, user_name, can_serve=True, phone=phone)

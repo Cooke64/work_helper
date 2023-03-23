@@ -25,12 +25,13 @@ async def send_report(call: CallbackQuery, state: FSMContext):
     await state.update_data(ready_to_start=call.data)
     await call.message.answer(f'Выбрали формат {call.data} для отчета.')
     await bot.delete_message(call.message.chat.id, call.message.message_id)
-    file = InputFile(get_filename(call.data))
     try:
+        file = InputFile(get_filename(call.data))
         await call.message.answer_document(file)
     except (FileExistsError, FileNotFoundError):
         docker_parh = '/app/handlers/admin/report_admin'
         os.chdir(docker_parh)
+        file = InputFile(get_filename(call.data))
         await call.message.answer_document(file)
     finally:
         await state.finish()

@@ -22,6 +22,7 @@ logger.addHandler(logging.StreamHandler())
 
 engine = create_engine(settings.DATABASE_URL, future=True)
 
+
 Session = sessionmaker(bind=engine)
 
 session = Session()

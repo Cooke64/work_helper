@@ -15,13 +15,13 @@ duty = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Требования', callback_data='duty_требования'
+                text='👮 ‍Требования', callback_data='duty_требования'
             ),
             InlineKeyboardButton(
-                text='Обязанности', callback_data='duty_обязанности'
+                text='❗ Обязанности', callback_data='duty_обязанности'
             ),
             InlineKeyboardButton(
-                text='Запреты и ограничения', callback_data='duty_запреты'
+                text='⭕ Запреты и ограничения', callback_data='duty_запреты'
             ),
         ],
     ],
@@ -32,19 +32,19 @@ benefits = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Зарплата', callback_data='benefits_зарплата'
+                text='💶 Зарплата', callback_data='benefits_зарплата'
             ),
             InlineKeyboardButton(
-                text='Жилищное обеспечение', callback_data='benefits_жилье'
+                text='🏠 Жилищное обеспечение', callback_data='benefits_жилье'
             ),
         ],
         [
             InlineKeyboardButton(
-                text='Порядок начисления пенсии',
+                text='🏦 Порядок начисления пенсии',
                 callback_data='benefits_пенсия'
             ),
             InlineKeyboardButton(
-                text='Отпуск', callback_data='benefits_отпуск'
+                text='🏖 Отпуск', callback_data='benefits_отпуск'
             ),
         ],
     ],
@@ -55,10 +55,10 @@ TEST_USER_CHOICES = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Да', callback_data='1'
+                text='✅ Да', callback_data='1'
             ),
             InlineKeyboardButton(
-                text='Нет', callback_data='0'
+                text='❌ Нет', callback_data='0'
             ),
         ],
     ],

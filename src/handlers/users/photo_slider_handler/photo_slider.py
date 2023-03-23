@@ -13,13 +13,13 @@ from handlers.users.photo_slider_handler.slider_keyboard import (
 from loader import dp, bot
 
 
-@dp.message_handler(lambda message: 'Про Шереметьево' in message.text)
+@dp.message_handler(lambda message: 'Про расположение' in message.text)
 async def get_photo_slider(message: Message):
     items = get_items()
     if items:
         photo_data = items[0]
         await message.answer(
-            'Здесь вы можете узнать про Шереметьево, города рядом, природу и тд',
+            'Здесь вы можете узнать про Шереметьево и города рядом',
         )
         # отображает процесс отправки фото.
         await bot.send_chat_action(message.chat.id, ChatActions.UPLOAD_PHOTO)

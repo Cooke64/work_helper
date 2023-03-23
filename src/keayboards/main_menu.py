@@ -32,7 +32,7 @@ admin_menu = ReplyKeyboardMarkup(
 info_menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Про Шереметьево'),
+            KeyboardButton(text='Про расположение'),
             KeyboardButton(text='Чем предстоит заниматься?'),
         ],
         [

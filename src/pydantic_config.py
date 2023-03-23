@@ -15,11 +15,11 @@ class AdvancedBaseSettings(BaseSettings):
 
 class BotSettings(AdvancedBaseSettings):
     TOKEN: str = Field(..., env="TOKEN")
-    DEBUG: str = Field(..., env="DEBUG")
     REDIS_HOST: str = Field(..., env="REDIS_HOST")
     REDIS_PORT: str = Field(..., env="REDIS_PORT")
     BASIC_PHOTO: str = Field(..., env="BASIC_PHOTO")
     ADMINS_ID: list[int] = Field(..., env="ADMINS_ID")
+    DEBUG: str = Field(..., env="_DEBUG")
 
     class Config:
         @classmethod
